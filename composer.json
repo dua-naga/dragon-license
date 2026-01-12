@@ -1,0 +1,30 @@
+{
+    "name": "dua-naga/dragon-license",
+    "description": "Laravel Package for Dua Naga License Management",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "DuaNaga\\DragonLicense\\": "src/"
+        },
+        "files": [
+            "src/Helpers/functions.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DuaNaga\\DragonLicense\\Providers\\DragonLicenseServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Dua Naga",
+            "email": "admin@duanaga.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    }
+}
