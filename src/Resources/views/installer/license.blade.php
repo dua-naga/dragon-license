@@ -11,10 +11,20 @@
 </div>
 
 <div class="content">
-    <h2 style="margin-bottom: 15px;">License Activation</h2>
-    <p style="margin-bottom: 30px; color: rgba(255,255,255,0.7);">
-        Please enter your license details to continue with the installation.
-    </p>
+    <h2>License Activation</h2>
+    <p>Please enter your license details to continue with the installation.</p>
+    
+    <div class="info-box">
+        <h4>Site And Device Information</h4>
+        <div class="info-row">
+            <span class="label">Domain</span>
+            <span class="value">{{ request()->getHost() }}</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Device Name</span>
+            <span class="value">{{ gethostname() }}</span>
+        </div>
+    </div>
     
     @if(session('failed'))
     <div class="alert alert-danger">
@@ -24,6 +34,7 @@
     
     <form action="{{ route('DragonLicense::licenseStore') }}" method="POST">
         @csrf
+        <input type="hidden" name="product" value="{{ config('app.name', 'Application') }}">
         
         <div class="form-group">
             <label for="purchase">Purchase Code</label>
@@ -31,13 +42,8 @@
         </div>
         
         <div class="form-group">
-            <label for="email">Email Address</label>
+            <label for="email">Email</label>
             <input type="email" name="email" id="email" required placeholder="Enter your email">
-        </div>
-        
-        <div class="form-group">
-            <label for="product">Product Name</label>
-            <input type="text" name="product" id="product" value="{{ config('app.name', 'Application') }}" required>
         </div>
         
         <button type="submit" class="btn">

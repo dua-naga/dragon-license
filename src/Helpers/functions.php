@@ -55,6 +55,6 @@ if (! function_exists('dragon_license_url')) {
      */
     function dragon_license_url()
     {
-        return config('dragon-license.server_url', 'https://license.duanaga.com');
+        return config('dragon-license.server_url');
     }
 }

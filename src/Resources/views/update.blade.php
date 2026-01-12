@@ -4,15 +4,26 @@
 
 @section('content')
 <div class="content">
-    <h2 style="margin-bottom: 15px;">Update License</h2>
-    <p style="margin-bottom: 30px; color: rgba(255,255,255,0.7);">
-        Update your license information.
-    </p>
+    <h2>Update License</h2>
+    <p>Update your license information.</p>
+    
+    <div class="info-box">
+        <h4>Site And Device Information</h4>
+        <div class="info-row">
+            <span class="label">Domain</span>
+            <span class="value">{{ $license->ip_or_domain ?? request()->getHost() }}</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Device Name</span>
+            <span class="value">{{ gethostname() }}</span>
+        </div>
+    </div>
     
     <div id="alert-container"></div>
     
     <form id="license-form">
         @csrf
+        <input type="hidden" name="product" value="{{ $license->name ?? config('app.name', 'Application') }}">
         
         <div class="form-group">
             <label for="purchase">Purchase Code</label>
@@ -20,13 +31,8 @@
         </div>
         
         <div class="form-group">
-            <label for="email">Email Address</label>
+            <label for="email">Email</label>
             <input type="email" name="email" id="email" value="{{ $license->email ?? '' }}" required placeholder="Enter your email">
-        </div>
-        
-        <div class="form-group">
-            <label for="product">Product Name</label>
-            <input type="text" name="product" id="product" value="{{ $license->name ?? config('app.name', 'Application') }}" required>
         </div>
         
         <button type="submit" class="btn" id="submit-btn">

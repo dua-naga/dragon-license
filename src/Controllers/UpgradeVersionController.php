@@ -22,8 +22,8 @@ class UpgradeVersionController extends Controller
         $license        = License::first(); 
         $response       = Http::withHeaders([
             'Accept'        => 'application/json',
-            'businessId'    => 'whatsmailorganisation',
-        ])->post(license_url() . '/api/versions/latest', [
+            'businessId'    => config('dragon-license.business_id'),
+        ])->post(dragon_license_url() . '/api/versions/latest', [
             'license'           => $license->purchase,
             'email'             => $license->email,
             'product'           => $license->name,
@@ -39,7 +39,7 @@ class UpgradeVersionController extends Controller
     public function start()
     {
 
-        if (!check_connection()) {
+        if (!dragon_check_connection()) {
             return redirect()->route('upgrade.versions')->with(['gagal' => 'Failed to Connect to WhatsMail.org server']);
         }
 
@@ -53,8 +53,8 @@ class UpgradeVersionController extends Controller
         $license        = License::first(['purchase', 'email', 'name', 'version_code']);
         $response       = Http::withHeaders([
             'Accept'        => 'application/json',
-            'businessId'    => 'whatsmailorganisation',
-        ])->post(license_url() . '/api/versions/to-upgrade', [
+            'businessId'    => config('dragon-license.business_id'),
+        ])->post(dragon_license_url() . '/api/versions/to-upgrade', [
             'license'           => $license->purchase,
             'email'             => $license->email,
             'product'           => $license->name,

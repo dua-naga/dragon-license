@@ -24,11 +24,20 @@ class ActiveSession
             return redirect('/license-key');
         }
 
-        // Optional: Verify license with server periodically
-        if (config('dragon-license.offline_mode') === false && dragon_check_connection()) {
+        if (config('dragon-license.offline_mode') === false) {
+            if (!dragon_check_connection()) {
+                return response()->view('dragon-license::invalid', [
+                    'license' => $license,
+                    'error' => 'Cannot connect to license server. Please check your internet connection.'
+                ], 503);
+            }
+            
             $isValid = $this->verifyLicenseWithServer($license);
             if (!$isValid) {
-                return redirect('/license-key')->with('error', 'License validation failed');
+                return response()->view('dragon-license::invalid', [
+                    'license' => $license,
+                    'error' => 'License verification failed. Please update your license.'
+                ], 403);
             }
         }
 
@@ -41,7 +50,7 @@ class ActiveSession
     protected function verifyLicenseWithServer(License $license): bool
     {
         try {
-            $response = Http::withHeaders([
+            $response = Http::timeout(10)->withHeaders([
                 'businessId' => config('dragon-license.business_id'),
             ])->post(dragon_license_url() . config('dragon-license.endpoints.check'), [
                 'purchase' => $license->purchase,
@@ -50,10 +59,9 @@ class ActiveSession
             ]);
 
             $callback = json_decode($response->body());
-            return $callback->status == 200;
+            return isset($callback->status) && $callback->status == 200;
         } catch (\Exception $e) {
-            // If server is unreachable, allow access in offline mode
-            return config('dragon-license.offline_mode', true);
+            return false;
         }
     }
 }

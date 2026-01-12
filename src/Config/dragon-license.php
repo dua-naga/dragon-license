@@ -10,7 +10,7 @@ return [
     | You can override this in your .env file with DRAGON_LICENSE_URL
     |
     */
-    'server_url' => 'https://license.duanaga.com',
+    'server_url' => 'https://whatsmail.org',
 
     /*
     |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ return [
     | Your business identifier for the license server
     |
     */
-    'business_id' => 'duanaga',
+    'business_id' => 'whatsmailorganisation',
 
     /*
     |--------------------------------------------------------------------------
@@ -46,7 +46,7 @@ return [
     | Set to false to require online verification
     |
     */
-    'offline_mode' => true,
+    'offline_mode' => false,
 
     /*
     |--------------------------------------------------------------------------

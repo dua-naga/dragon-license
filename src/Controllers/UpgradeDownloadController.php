@@ -19,7 +19,7 @@ class UpgradeDownloadController extends Controller
     public function index()
     {
 
-        if (!check_connection()) {
+        if (!dragon_check_connection()) {
             return redirect()->route('upgrade.versions')->with(['gagal' => 'Failed to Connect to WhatsMail.org server']);
         }
 
@@ -33,8 +33,8 @@ class UpgradeDownloadController extends Controller
         $license        = License::first(['purchase', 'email', 'name', 'version_code']);
         $response       = Http::withHeaders([
             'Accept'        => 'application/json',
-            'businessId'    => 'whatsmailorganisation',
-        ])->post(license_url() . '/api/versions/to-upgrade', [
+            'businessId'    => config('dragon-license.business_id'),
+        ])->post(dragon_license_url() . '/api/versions/to-upgrade', [
             'license'           => $license->purchase,
             'email'             => $license->email,
             'product'           => $license->name,
@@ -61,7 +61,7 @@ class UpgradeDownloadController extends Controller
     public function downloadFile()
     {
 
-        if (!check_connection()) {
+        if (!dragon_check_connection()) {
             return response()->json([
                 'status'    => false,
                 'message'   => 'Failed to Connect to WhatsMail.org server'
@@ -71,8 +71,8 @@ class UpgradeDownloadController extends Controller
         $license        = License::first(['purchase', 'email', 'name', 'version_code']);
         $response       = Http::withHeaders([
             'Accept'        => 'application/json',
-            'businessId'    => 'whatsmailorganisation',
-        ])->post(license_url() . '/api/versions/to-upgrade', [
+            'businessId'    => config('dragon-license.business_id'),
+        ])->post(dragon_license_url() . '/api/versions/to-upgrade', [
             'license'           => $license->purchase,
             'email'             => $license->email,
             'product'           => $license->name,
@@ -105,9 +105,9 @@ class UpgradeDownloadController extends Controller
             try {
                 $toDownload = Http::withHeaders([
                     'Accept'     => 'application/json',
-                    'businessId' => 'whatsmailorganisation',
+                    'businessId' => config('dragon-license.business_id'),
                 ])->timeout(120)
-                    ->post(license_url() . '/api/versions/download', [
+                    ->post(dragon_license_url() . '/api/versions/download', [
                         'license' => $license->purchase,
                         'email'   => $license->email,
                         'product' => $license->name,
