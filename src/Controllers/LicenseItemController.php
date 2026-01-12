@@ -92,8 +92,8 @@ class LicenseItemController extends Controller
                     'email' => $request->email,
                     'ip_or_domain' => $domain,
                     'name' => $request->product,
-                    'version_name' => env('VERSION_NAME'),
-                    'version_code' => env('VERSION_CODE')
+                    'version_name' => '1.0.0',
+                    'version_code' => 1
                 ]);
 
                 return response()->json([

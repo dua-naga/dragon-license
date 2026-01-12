@@ -50,8 +50,8 @@ class LicenseController extends Controller
         session()->put('storage_license', $request->purchase);
         session()->put('storage_username', $request->email);
         session()->put('product_type', $request->product);
-        session()->put('version_code', env('VERSION_CODE'));
-        session()->put('version_name', env('VERSION_NAME'));
+        session()->put('version_code', 1);
+        session()->put('version_name', '1.0.0');
 
         return redirect()->route('DragonLicense::requirements');
     }

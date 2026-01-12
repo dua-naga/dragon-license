@@ -33,11 +33,11 @@ class FinalController extends Controller
         event(new DragonLicenseFinished);
 
         $license = License::create([
-            'name' => env('PRODUCT_TYPE'),
-            'email' => env('PURCHASE_USERNAME'),
-            'purchase' => env('PURCHASE_CODE'),
-            'version_name' => env('VERSION_NAME'),
-            'version_code' => env('VERSION_CODE'),
+            'name' => session('product_type'),
+            'email' => session('storage_username'),
+            'purchase' => session('storage_license'),
+            'version_name' => session('version_name', '1.0.0'),
+            'version_code' => session('version_code', 1),
             'ip_or_domain' => $domain,
             'type' => 'online'
         ]);

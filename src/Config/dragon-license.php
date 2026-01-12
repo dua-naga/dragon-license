@@ -10,7 +10,7 @@ return [
     | You can override this in your .env file with DRAGON_LICENSE_URL
     |
     */
-    'server_url' => env('DRAGON_LICENSE_URL', 'https://license.duanaga.com'),
+    'server_url' => 'https://license.duanaga.com',
 
     /*
     |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ return [
     | Your business identifier for the license server
     |
     */
-    'business_id' => env('DRAGON_BUSINESS_ID', 'duanaga'),
+    'business_id' => 'duanaga',
 
     /*
     |--------------------------------------------------------------------------
@@ -46,7 +46,7 @@ return [
     | Set to false to require online verification
     |
     */
-    'offline_mode' => env('DRAGON_OFFLINE_MODE', true),
+    'offline_mode' => true,
 
     /*
     |--------------------------------------------------------------------------

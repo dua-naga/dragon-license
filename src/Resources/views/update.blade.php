@@ -26,7 +26,7 @@
         
         <div class="form-group">
             <label for="product">Product Name</label>
-            <input type="text" name="product" id="product" value="{{ $license->name ?? env('APP_NAME', 'Application') }}" required>
+            <input type="text" name="product" id="product" value="{{ $license->name ?? config('app.name', 'Application') }}" required>
         </div>
         
         <button type="submit" class="btn" id="submit-btn">
