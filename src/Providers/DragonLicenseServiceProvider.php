@@ -1,8 +1,6 @@
 <?php
 
 namespace DuaNaga\DragonLicense\Providers;
-
-use App\Http\Middleware\Authenticate;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use DuaNaga\DragonLicense\Middleware\ActiveSession;
@@ -54,12 +52,11 @@ class DragonLicenseServiceProvider extends ServiceProvider
             __DIR__.'/../Config/dragon-license.php' => config_path('dragon-license.php'),
         ], 'dragon-license-config');
         
-        // Register middleware
-        $router->middlewareGroup('auth', [Authenticate::class]);
-        $router->middlewareGroup('is_license', [IsLicense::class]);
-        $router->middlewareGroup('install', [CanInstall::class]);
-        $router->middlewareGroup('update', [CanUpdate::class]);
-        $router->middlewareGroup('nextinstall', [CanNext::class]);
-        $router->middlewareGroup('active_session', [ActiveSession::class]);
+        // Register middleware aliases
+        $router->aliasMiddleware('is_license', IsLicense::class);
+        $router->aliasMiddleware('install', CanInstall::class);
+        $router->aliasMiddleware('update', CanUpdate::class);
+        $router->aliasMiddleware('nextinstall', CanNext::class);
+        $router->aliasMiddleware('active_session', ActiveSession::class);
     }
 }
