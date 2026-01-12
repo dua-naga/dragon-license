@@ -10,7 +10,7 @@ return [
     | You can override this in your .env file with DRAGON_LICENSE_URL
     |
     */
-    'server_url' => 'https://whatsmail.org',
+    'server_url' => 'https://dummyjson.com',
 
     /*
     |--------------------------------------------------------------------------
