@@ -17,7 +17,7 @@ class LicenseController extends Controller
      */
     public function index()
     {
-        return view('vendor.dragon-license.installer.license');
+        return view('dragon-license::installer.license');
     }
 
     public function savingCredencial(Request $request)

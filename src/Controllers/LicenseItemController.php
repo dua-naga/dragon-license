@@ -13,12 +13,12 @@ class LicenseItemController extends Controller
 {
     public function welcome()
     {
-        return view('vendor.dragon-license.welcome');
+        return view('dragon-license::welcome');
     }
 
     public function validation()
     {
-        return view('vendor.dragon-license.input');
+        return view('dragon-license::input');
     }
 
     public function checkValidation(Request $request)
@@ -122,7 +122,7 @@ class LicenseItemController extends Controller
     public function updateLicense()
     {
         $license = License::first();
-        return view('vendor.dragon-license.update', ["page" => "Update License"], compact('license'));
+        return view('dragon-license::update', ["page" => "Update License"], compact('license'));
     }
 
     public function update(Request $request)

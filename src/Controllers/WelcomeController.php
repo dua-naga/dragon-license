@@ -13,7 +13,7 @@ class WelcomeController extends Controller
      */
     public function welcome()
     {
-        return view('vendor.dragon-license.installer.welcome');
+        return view('dragon-license::installer.welcome');
     }
 
     public function offlineMode()
@@ -30,6 +30,6 @@ class WelcomeController extends Controller
             $is_conn = false;
         }
 
-        return view('vendor.dragon-license.upgrade.offline', compact('is_conn'));
+        return view('dragon-license::upgrade.offline', compact('is_conn'));
     }
 }

@@ -31,6 +31,6 @@ class PermissionsController extends Controller
             config('dragon-license.permissions')
         );
 
-        return view('vendor.dragon-license.installer.permissions', compact('permissions'));
+        return view('dragon-license::installer.permissions', compact('permissions'));
     }
 }

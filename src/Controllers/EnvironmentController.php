@@ -33,7 +33,7 @@ class EnvironmentController extends Controller
      */
     public function environmentMenu()
     {
-        return view('vendor.dragon-license.installer.environment');
+        return view('dragon-license::installer.environment');
     }
 
     /**
@@ -45,7 +45,7 @@ class EnvironmentController extends Controller
     {
         $envConfig = $this->EnvironmentManager->getEnvContent();
 
-        return view('vendor.dragon-license.installer.environment-wizard', compact('envConfig'));
+        return view('dragon-license::installer.environment-wizard', compact('envConfig'));
     }
 
     /**
@@ -57,7 +57,7 @@ class EnvironmentController extends Controller
     {
         $envConfig = $this->EnvironmentManager->getEnvContent();
 
-        return view('vendor.dragon-license.installer.environment-classic', compact('envConfig'));
+        return view('dragon-license::installer.environment-classic', compact('envConfig'));
     }
 
     /**

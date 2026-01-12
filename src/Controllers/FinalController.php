@@ -45,7 +45,7 @@ class FinalController extends Controller
         session()->put('license_activation', $license->purchase);
         session()->put('username_activation', $license->name);
 
-        return view('vendor.dragon-license.installer.finished', compact('finalMessages', 'finalStatusMessage', 'finalEnvFile'));
+        return view('dragon-license::installer.finished', compact('finalMessages', 'finalStatusMessage', 'finalEnvFile'));
     }
 
     protected function getDomain(): string

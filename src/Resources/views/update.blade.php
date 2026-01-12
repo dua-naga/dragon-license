@@ -1,4 +1,4 @@
-@extends('vendor.dragon-license.layouts.master')
+@extends('dragon-license::layouts.master')
 
 @section('title', 'Update License - Dragon License')
 

@@ -32,6 +32,6 @@ class RequirementsController extends Controller
             config('dragon-license.requirements')
         );
 
-        return view('vendor.dragon-license.installer.requirements', compact('requirements', 'phpSupportInfo'));
+        return view('dragon-license::installer.requirements', compact('requirements', 'phpSupportInfo'));
     }
 }
