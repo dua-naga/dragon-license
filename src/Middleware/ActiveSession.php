@@ -59,7 +59,10 @@ class ActiveSession
             ]);
 
             $callback = json_decode($response->body());
-            return isset($callback->status) && $callback->status == 200;
+            
+            return $response->successful() && 
+                   $callback && 
+                   (($callback->status ?? null) === 'success' || ($callback->status ?? null) == 200);
         } catch (\Exception $e) {
             return false;
         }

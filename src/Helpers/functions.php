@@ -33,9 +33,11 @@ if (! function_exists('dragon_check_connection')) {
      */
     function dragon_check_connection()
     {
-        $licenseUrl = parse_url(dragon_license_url(), PHP_URL_HOST);
+        $url = dragon_license_url();
+        $host = parse_url($url, PHP_URL_HOST);
+        $port = parse_url($url, PHP_URL_PORT) ?: 80;
         
-        $connected = @fsockopen($licenseUrl, 80, $errno, $errstr, 5);
+        $connected = @fsockopen($host, $port, $errno, $errstr, 5);
         if ($connected) {
             $is_conn = true;
             fclose($connected);

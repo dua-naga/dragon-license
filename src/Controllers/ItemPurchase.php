@@ -35,9 +35,13 @@ trait ItemPurchase
 
             $callback = json_decode($response->body());
 
-            if ($callback->status == 200) {
-                session()->put('active_session', $callback->token);
-                return $callback->token;
+            $isSuccess = $response->successful() && 
+                         $callback && 
+                         (($callback->status ?? null) === 'success' || ($callback->status ?? null) == 200);
+
+            if ($isSuccess) {
+                session()->put('active_session', $callback->token ?? null);
+                return $callback->token ?? true;
             } else {
                 return false;
             }

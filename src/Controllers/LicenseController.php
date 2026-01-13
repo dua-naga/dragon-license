@@ -36,12 +36,10 @@ class LicenseController extends Controller
             }
         }
 
-        // Offline mode - skip server verification
         if (!dragon_check_connection() && config('dragon-license.offline_mode', true)) {
             return $this->saveToSession($request);
         }
 
-        // Online mode - verify with server
         return $this->verifyAndSave($request);
     }
 
@@ -80,17 +78,20 @@ class LicenseController extends Controller
 
             $callback = json_decode($toServer->body());
 
-            if ($callback->status == 200) {
+            $isSuccess = $toServer->successful() && 
+                         $callback && 
+                         (($callback->status ?? null) === 'success' || ($callback->status ?? null) == 200);
+
+            if ($isSuccess) {
                 session()->put('storage_license', $request->purchase);
                 session()->put('storage_username', $request->email);
                 session()->put('product_type', $request->product);
 
                 return redirect()->route('DragonLicense::requirements');
             } else {
-                return redirect()->back()->with(['failed' => $callback->message]);
+                return redirect()->back()->with(['failed' => $callback->pesan ?? $callback->message ?? 'License validation failed']);
             }
         } catch (\Exception $e) {
-            // Fallback to offline mode
             if (config('dragon-license.offline_mode', true)) {
                 return $this->saveToSession($request);
             }

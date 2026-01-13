@@ -40,19 +40,16 @@ class LicenseItemController extends Controller
         $deviceName = getHostName();
         $domain = $this->getDomain();
 
-        // Offline mode - save license directly
         if (!dragon_check_connection() && config('dragon-license.offline_mode', true)) {
             return $this->saveLicenseOffline($request, $domain);
         }
 
-        // Online mode - verify with server
         return $this->verifyLicenseOnline($request, $domain, $deviceName);
     }
 
     protected function getDomain(): string
     {
         $root = FacadesRequest::root();
-        // Remove http:// or https://
         return preg_replace('#^https?://#', '', $root);
     }
 
@@ -86,7 +83,11 @@ class LicenseItemController extends Controller
 
             $callback = json_decode($toServer->body());
 
-            if ($callback->status == 200) {
+            $isSuccess = $toServer->successful() && 
+                         $callback && 
+                         (($callback->status ?? null) === 'success' || ($callback->status ?? null) == 200);
+
+            if ($isSuccess) {
                 License::create([
                     'purchase' => $request->purchase,
                     'email' => $request->email,
@@ -102,12 +103,11 @@ class LicenseItemController extends Controller
                 ]);
             } else {
                 return response()->json([
-                    'pesan' => $callback->message ?? 'License validation failed',
+                    'pesan' => $callback->pesan ?? $callback->message ?? 'License validation failed',
                     'status' => 'error'
                 ]);
             }
         } catch (\Exception $e) {
-            // Fallback to offline mode if server error
             if (config('dragon-license.offline_mode', true)) {
                 return $this->saveLicenseOffline($request, $domain);
             }
@@ -181,7 +181,11 @@ class LicenseItemController extends Controller
 
             $callback = json_decode($toServer->body());
 
-            if ($callback->status == 200) {
+            $isSuccess = $toServer->successful() && 
+                         $callback && 
+                         (($callback->status ?? null) === 'success' || ($callback->status ?? null) == 200);
+
+            if ($isSuccess) {
                 License::first()->update([
                     'purchase' => $request->purchase,
                     'email' => $request->email,
@@ -195,7 +199,7 @@ class LicenseItemController extends Controller
                 ]);
             } else {
                 return response()->json([
-                    'pesan' => $callback->message ?? 'License validation failed',
+                    'pesan' => $callback->pesan ?? $callback->message ?? 'License validation failed',
                     'status' => 'error'
                 ]);
             }
