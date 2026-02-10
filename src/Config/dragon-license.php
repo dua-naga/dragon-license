@@ -35,7 +35,7 @@ return [
     | Your business identifier for the license server
     |
     */
-    'business_id' => 'whatsmailorganisation',
+    'business_id' => 'duanagaorganisation',
 
     /*
     |--------------------------------------------------------------------------
