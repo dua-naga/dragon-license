@@ -39,12 +39,16 @@
         </div>
     </div>
     
-    <p style="font-size: 0.85rem; margin-bottom: 20px;">
-        Please contact support or update your license to continue using the application.
-    </p>
+    @if(empty($network_error))
+        <p style="font-size: 0.85rem; margin-bottom: 20px;">
+            Please contact support or update your license to continue using the application.
+        </p>
+    @endif
     
     <div class="btn-group">
-        <a href="{{ route('dragon-license.license-update') }}" class="btn">Update License</a>
+        @if(empty($network_error))
+            <a href="{{ route('dragon-license.license-update') }}" class="btn">Update License</a>
+        @endif
         <a href="javascript:location.reload()" class="btn btn-secondary">Retry</a>
     </div>
 </div>
