@@ -13,6 +13,10 @@ class ActiveSession
 {
     public function handle(Request $request, Closure $next): Response
     {
+        if (env('APP_ENV') === 'local' || env('SKIP_LICENSE_CHECK', false) == true) {
+            return $next($request);
+        }
+
         $license = License::first();
         
         if ($license == null) {
