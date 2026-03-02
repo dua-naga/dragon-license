@@ -22,7 +22,7 @@ trait ItemPurchase
         $domain = preg_replace('#^https?://#', '', $root);
 
         try {
-            $response = Http::withHeaders([
+            $response = dragon_http()->withHeaders([
                 'Accept' => 'application/json',
                 'businessId' => config('dragon-license.business_id', 'duanaga'),
             ])->post(dragon_license_url() . config('dragon-license.endpoints.credential', '/api/license/get-credential'), [

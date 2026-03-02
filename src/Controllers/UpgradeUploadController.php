@@ -32,11 +32,11 @@ class UpgradeUploadController extends Controller
         }
 
         $license        = License::first(['purchase', 'email', 'name', 'version_code']);
-        $response       = Http::withHeaders([
+        $response       = dragon_http()->withHeaders([
             'Accept'        => 'application/json',
             'businessId'    => config('dragon-license.business_id'),
         ])->post(dragon_license_url() . '/api/versions/to-upgrade', [
-            'license'           => $license->purchase,
+            'license'           => $purchase = $license->purchase,
             'email'             => $license->email,
             'product'           => $license->name,
             'version'           => $license->version_code

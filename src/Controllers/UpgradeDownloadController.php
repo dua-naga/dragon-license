@@ -31,7 +31,7 @@ class UpgradeDownloadController extends Controller
 
         $settings       = InternalSetting::first(['logo', 'app_name']);
         $license        = License::first(['purchase', 'email', 'name', 'version_code']);
-        $response       = Http::withHeaders([
+        $response       = dragon_http()->withHeaders([
             'Accept'        => 'application/json',
             'businessId'    => config('dragon-license.business_id'),
         ])->post(dragon_license_url() . '/api/versions/to-upgrade', [
@@ -69,7 +69,7 @@ class UpgradeDownloadController extends Controller
         }
 
         $license        = License::first(['purchase', 'email', 'name', 'version_code']);
-        $response       = Http::withHeaders([
+        $response       = dragon_http()->withHeaders([
             'Accept'        => 'application/json',
             'businessId'    => config('dragon-license.business_id'),
         ])->post(dragon_license_url() . '/api/versions/to-upgrade', [
@@ -103,7 +103,7 @@ class UpgradeDownloadController extends Controller
 
         while ($attempt < $retries && !$toDownload) {
             try {
-                $toDownload = Http::withHeaders([
+                $toDownload = dragon_http()->withHeaders([
                     'Accept'     => 'application/json',
                     'businessId' => config('dragon-license.business_id'),
                 ])->timeout(120)

@@ -71,7 +71,7 @@ class LicenseItemController extends Controller
     protected function verifyLicenseOnline(Request $request, string $domain, string $deviceName)
     {
         try {
-            $toServer = Http::withHeaders([
+            $toServer = dragon_http()->withHeaders([
                 'businessId' => config('dragon-license.business_id'),
             ])->post(dragon_license_url() . config('dragon-license.endpoints.check'), [
                 'purchase' => $request->purchase,
@@ -169,7 +169,7 @@ class LicenseItemController extends Controller
     protected function updateLicenseOnline(Request $request, string $domain, string $deviceName)
     {
         try {
-            $toServer = Http::withHeaders([
+            $toServer = dragon_http()->withHeaders([
                 'businessId' => config('dragon-license.business_id'),
             ])->post(dragon_license_url() . config('dragon-license.endpoints.check'), [
                 'purchase' => $request->purchase,

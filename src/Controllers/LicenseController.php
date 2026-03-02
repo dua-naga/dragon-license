@@ -66,7 +66,7 @@ class LicenseController extends Controller
             $deviceName = getHostName();
             $domain = $this->getDomain();
 
-            $toServer = Http::withHeaders([
+            $toServer = dragon_http()->withHeaders([
                 'businessId' => config('dragon-license.business_id'),
             ])->post(dragon_license_url() . config('dragon-license.endpoints.check'), [
                 'purchase' => $request->purchase,

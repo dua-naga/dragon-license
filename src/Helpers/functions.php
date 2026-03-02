@@ -34,8 +34,13 @@ if (! function_exists('dragon_check_connection')) {
     function dragon_check_connection()
     {
         $url = dragon_license_url();
+        $scheme = parse_url($url, PHP_URL_SCHEME);
         $host = parse_url($url, PHP_URL_HOST);
-        $port = parse_url($url, PHP_URL_PORT) ?: 80;
+        $port = parse_url($url, PHP_URL_PORT);
+        
+        if (!$port) {
+            $port = ($scheme === 'https') ? 443 : 80;
+        }
         
         $connected = @fsockopen($host, $port, $errno, $errstr, 5);
         if ($connected) {
@@ -58,5 +63,23 @@ if (! function_exists('dragon_license_url')) {
     function dragon_license_url()
     {
         return config('dragon-license.server_url');
+    }
+}
+
+if (! function_exists('dragon_http')) {
+    /**
+     * Get a pre-configured Http client
+     *
+     * @return \Illuminate\Http\Client\PendingRequest
+     */
+    function dragon_http()
+    {
+        $request = \Illuminate\Support\Facades\Http::timeout(30);
+        
+        if (config('dragon-license.verify_ssl') === false) {
+            $request->withoutVerifying();
+        }
+
+        return $request;
     }
 }

@@ -58,15 +58,9 @@ class ActiveSession
     protected function verifyLicenseWithServer(License $license): array
     {
         try {
-            $request = Http::timeout(10)->withHeaders([
+            $response = dragon_http()->withHeaders([
                 'businessId' => config('dragon-license.business_id'),
-            ]);
-
-            if (config('dragon-license.verify_ssl') === false) {
-                $request->withoutVerifying();
-            }
-
-            $response = $request->post(dragon_license_url() . config('dragon-license.endpoints.check'), [
+            ])->post(dragon_license_url() . config('dragon-license.endpoints.check'), [
                 'purchase' => $license->purchase,
                 'email' => $license->email,
                 'domain' => $license->ip_or_domain,
