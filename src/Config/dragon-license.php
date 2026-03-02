@@ -81,4 +81,15 @@ return [
         'storage/logs/' => '775',
         'bootstrap/cache/' => '775',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Verify SSL
+    |--------------------------------------------------------------------------
+    |
+    | If true, the license server's SSL certificate will be verified.
+    | Set to false for local development if you encounter SSL issues.
+    |
+    */
+    'verify_ssl' => env('DRAGON_LICENSE_VERIFY_SSL', true),
 ];
